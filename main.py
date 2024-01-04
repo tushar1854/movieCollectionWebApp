@@ -16,6 +16,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///movie-collection.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# https://developer.themoviedb.org/reference/intro/getting-started
+API_ACCESS_TOKEN = "GET_YOUR_ACCESS_TOKEN_USING_UPPER_URL"
+
+
 # table created
 
 
@@ -33,17 +37,7 @@ class Movie(db.Model):
 # give entry to the table
 with app.app_context():
     db.create_all()
-    # new_movie = Movie(
-    #     title="Phone Booth",
-    #     year=2002,
-    #     description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-    #     rating=7.3,
-    #     ranking=10,
-    #     review="My favourite character was the caller.",
-    #     img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
-    # )
-    # db.session.add(new_movie)
-    # db.session.commit()
+    
 
 
 # wt form creation
@@ -106,8 +100,7 @@ def add_movie():
         movie_name = movie_form.title.data
         url = f"https://api.themoviedb.org/3/search/movie?query={movie_name}&include_adult=false&language=en-US&page=1"
 
-        api_access_token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDZmZWIwYTE2ZmQwMDE1MGQwZjA5M2Y3MGZkNDI1NiIsInN1YiI6IjY0OWMwNDI1YzM5MjY2MDE0NDBlMDJjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ECfgY6qKNaykadFyoBFkfSmuRhGNmlaajKOLdRpIjqw"
-
+        api_access_token = API_ACCESS_TOKEN
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {api_access_token}"
@@ -125,7 +118,7 @@ def find_movie():
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?language=en-US"
     headers = {
         "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDZmZWIwYTE2ZmQwMDE1MGQwZjA5M2Y3MGZkNDI1NiIsInN1YiI6IjY0OWMwNDI1YzM5MjY2MDE0NDBlMDJjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ECfgY6qKNaykadFyoBFkfSmuRhGNmlaajKOLdRpIjqw"
+        "Authorization":  f"Bearer {api_access_token}"
     }
     response = requests.get(url, headers=headers)
     data = response.json()
