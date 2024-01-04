@@ -10,6 +10,10 @@ Step3:
 pip install -r requirements.txt
 
 Step4:
+Get your access token using this url and add it to main.py
+https://developer.themoviedb.org/reference/intro/getting-started
+
+Step5:
 python main.py
 
 Enjoy!!!!
